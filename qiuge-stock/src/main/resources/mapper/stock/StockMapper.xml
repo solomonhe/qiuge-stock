@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.stock.mapper.StockMapper">
+    
+    <resultMap type="Stock" id="StockResult">
+        <result property="id"    column="id"    />
+        <result property="stockCode"    column="stock_code"    />
+        <result property="stockTsCode"    column="stock_ts_code"    />
+        <result property="stockName"    column="stock_name"    />
+        <result property="area"    column="area"    />
+        <result property="industry"    column="industry"    />
+        <result property="stockFullName"    column="stock_full_name"    />
+        <result property="enName"    column="en_name"    />
+        <result property="cnspell"    column="cnspell"    />
+        <result property="market"    column="market"    />
+        <result property="exchange"    column="exchange"    />
+        <result property="currType"    column="curr_type"    />
+        <result property="opiStatus"    column="opi_status"    />
+        <result property="listDate"    column="list_date"    />
+        <result property="delistDate"    column="delist_date"    />
+        <result property="isHs"    column="is_hs"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectStockVo">
+        select id, stock_code, stock_ts_code, stock_name, area, industry, stock_full_name, en_name, cnspell, market, exchange, curr_type, opi_status, list_date, delist_date, is_hs, update_time, create_time from stock
+    </sql>
+
+    <select id="selectStockList" parameterType="Stock" resultMap="StockResult">
+        <include refid="selectStockVo"/>
+        <where>  
+            <if test="stockCode != null  and stockCode != ''"> and stock_code = #{stockCode}</if>
+            <if test="stockTsCode != null  and stockTsCode != ''"> and stock_ts_code = #{stockTsCode}</if>
+            <if test="stockName != null  and stockName != ''"> and stock_name like concat('%', #{stockName}, '%')</if>
+            <if test="area != null  and area != ''"> and area = #{area}</if>
+            <if test="industry != null  and industry != ''"> and industry = #{industry}</if>
+            <if test="stockFullName != null  and stockFullName != ''"> and stock_full_name like concat('%', #{stockFullName}, '%')</if>
+            <if test="enName != null  and enName != ''"> and en_name like concat('%', #{enName}, '%')</if>
+            <if test="cnspell != null  and cnspell != ''"> and cnspell = #{cnspell}</if>
+            <if test="market != null  and market != ''"> and market = #{market}</if>
+            <if test="exchange != null  and exchange != ''"> and exchange = #{exchange}</if>
+            <if test="currType != null  and currType != ''"> and curr_type = #{currType}</if>
+            <if test="opiStatus != null  and opiStatus != ''"> and opi_status = #{opiStatus}</if>
+            <if test="listDate != null "> and list_date = #{listDate}</if>
+            <if test="delistDate != null "> and delist_date = #{delistDate}</if>
+            <if test="isHs != null  and isHs != ''"> and is_hs = #{isHs}</if>
+        </where>
+    </select>
+    
+    <select id="selectStockById" parameterType="String" resultMap="StockResult">
+        <include refid="selectStockVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertStock" parameterType="Stock">
+        insert into stock
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="stockCode != null">stock_code,</if>
+            <if test="stockTsCode != null">stock_ts_code,</if>
+            <if test="stockName != null">stock_name,</if>
+            <if test="area != null">area,</if>
+            <if test="industry != null">industry,</if>
+            <if test="stockFullName != null">stock_full_name,</if>
+            <if test="enName != null">en_name,</if>
+            <if test="cnspell != null">cnspell,</if>
+            <if test="market != null">market,</if>
+            <if test="exchange != null">exchange,</if>
+            <if test="currType != null">curr_type,</if>
+            <if test="opiStatus != null">opi_status,</if>
+            <if test="listDate != null">list_date,</if>
+            <if test="delistDate != null">delist_date,</if>
+            <if test="isHs != null">is_hs,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="stockCode != null">#{stockCode},</if>
+            <if test="stockTsCode != null">#{stockTsCode},</if>
+            <if test="stockName != null">#{stockName},</if>
+            <if test="area != null">#{area},</if>
+            <if test="industry != null">#{industry},</if>
+            <if test="stockFullName != null">#{stockFullName},</if>
+            <if test="enName != null">#{enName},</if>
+            <if test="cnspell != null">#{cnspell},</if>
+            <if test="market != null">#{market},</if>
+            <if test="exchange != null">#{exchange},</if>
+            <if test="currType != null">#{currType},</if>
+            <if test="opiStatus != null">#{opiStatus},</if>
+            <if test="listDate != null">#{listDate},</if>
+            <if test="delistDate != null">#{delistDate},</if>
+            <if test="isHs != null">#{isHs},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStock" parameterType="Stock">
+        update stock
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stockCode != null">stock_code = #{stockCode},</if>
+            <if test="stockTsCode != null">stock_ts_code = #{stockTsCode},</if>
+            <if test="stockName != null">stock_name = #{stockName},</if>
+            <if test="area != null">area = #{area},</if>
+            <if test="industry != null">industry = #{industry},</if>
+            <if test="stockFullName != null">stock_full_name = #{stockFullName},</if>
+            <if test="enName != null">en_name = #{enName},</if>
+            <if test="cnspell != null">cnspell = #{cnspell},</if>
+            <if test="market != null">market = #{market},</if>
+            <if test="exchange != null">exchange = #{exchange},</if>
+            <if test="currType != null">curr_type = #{currType},</if>
+            <if test="opiStatus != null">opi_status = #{opiStatus},</if>
+            <if test="listDate != null">list_date = #{listDate},</if>
+            <if test="delistDate != null">delist_date = #{delistDate},</if>
+            <if test="isHs != null">is_hs = #{isHs},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteStockById" parameterType="String">
+        delete from stock where id = #{id}
+    </delete>
+
+    <delete id="deleteStockByIds" parameterType="String">
+        delete from stock where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
