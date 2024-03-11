@@ -1,0 +1,61 @@
+package com.qiuge.stock.service;
+
+import java.util.List;
+import com.qiuge.stock.domain.SwTradeInfo;
+
+/**
+ * 【请填写功能名称】Service接口
+ * 
+ * @author qiuge
+ * @date 2024-03-11
+ */
+public interface ISwTradeInfoService 
+{
+    /**
+     * 查询【请填写功能名称】
+     * 
+     * @param id 【请填写功能名称】主键
+     * @return 【请填写功能名称】
+     */
+    public SwTradeInfo selectSwTradeInfoById(String id);
+
+    /**
+     * 查询【请填写功能名称】列表
+     * 
+     * @param swTradeInfo 【请填写功能名称】
+     * @return 【请填写功能名称】集合
+     */
+    public List<SwTradeInfo> selectSwTradeInfoList(SwTradeInfo swTradeInfo);
+
+    /**
+     * 新增【请填写功能名称】
+     * 
+     * @param swTradeInfo 【请填写功能名称】
+     * @return 结果
+     */
+    public int insertSwTradeInfo(SwTradeInfo swTradeInfo);
+
+    /**
+     * 修改【请填写功能名称】
+     * 
+     * @param swTradeInfo 【请填写功能名称】
+     * @return 结果
+     */
+    public int updateSwTradeInfo(SwTradeInfo swTradeInfo);
+
+    /**
+     * 批量删除【请填写功能名称】
+     * 
+     * @param ids 需要删除的【请填写功能名称】主键集合
+     * @return 结果
+     */
+    public int deleteSwTradeInfoByIds(String[] ids);
+
+    /**
+     * 删除【请填写功能名称】信息
+     * 
+     * @param id 【请填写功能名称】主键
+     * @return 结果
+     */
+    public int deleteSwTradeInfoById(String id);
+}

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qiuge.stock.mapper.StockBiddingHistoryMapper">
+    
+ 
+
+    <sql id="selectStockBiddingHistoryVo">
+        select id, name, code, amount, amount_num, volume, volume_num, percent, day_date, create_time from stock_bidding_history
+    </sql>
+
+    <select id="selectStockBiddingHistoryList" parameterType="com.qiuge.stock.domain.StockBiddingHistory" >
+        <include refid="selectStockBiddingHistoryVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="amount != null "> and amount = #{amount}</if>
+            <if test="amountNum != null  and amountNum != ''"> and amount_num = #{amountNum}</if>
+            <if test="volume != null "> and volume = #{volume}</if>
+            <if test="volumeNum != null  and volumeNum != ''"> and volume_num = #{volumeNum}</if>
+            <if test="percent != null  and percent != ''"> and percent = #{percent}</if>
+            <if test="dayDate != null "> and day_date = #{dayDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectStockBiddingHistoryById" parameterType="String" >
+        <include refid="selectStockBiddingHistoryVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertStockBiddingHistory" parameterType="com.qiuge.stock.domain.StockBiddingHistory">
+        insert into stock_bidding_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="code != null and code != ''">code,</if>
+            <if test="amount != null">amount,</if>
+            <if test="amountNum != null">amount_num,</if>
+            <if test="volume != null">volume,</if>
+            <if test="volumeNum != null">volume_num,</if>
+            <if test="percent != null">percent,</if>
+            <if test="dayDate != null">day_date,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="code != null and code != ''">#{code},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="amountNum != null">#{amountNum},</if>
+            <if test="volume != null">#{volume},</if>
+            <if test="volumeNum != null">#{volumeNum},</if>
+            <if test="percent != null">#{percent},</if>
+            <if test="dayDate != null">#{dayDate},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStockBiddingHistory" parameterType="com.qiuge.stock.domain.StockBiddingHistory">
+        update stock_bidding_history
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="code != null and code != ''">code = #{code},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="amountNum != null">amount_num = #{amountNum},</if>
+            <if test="volume != null">volume = #{volume},</if>
+            <if test="volumeNum != null">volume_num = #{volumeNum},</if>
+            <if test="percent != null">percent = #{percent},</if>
+            <if test="dayDate != null">day_date = #{dayDate},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteStockBiddingHistoryById" parameterType="String">
+        delete from stock_bidding_history where id = #{id}
+    </delete>
+
+    <delete id="deleteStockBiddingHistoryByIds" parameterType="String">
+        delete from stock_bidding_history where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qiuge.stock.mapper.SwTradeInfoMapper">
+    
+  
+    <sql id="selectSwTradeInfoVo">
+        select id, sw_index_code, sw_index_name, bargain_amount, bargain_sum_rate, close_index, d_p, markup, mean_price, negotiables_share_sum, negotiables_share_sum2, p_b, p_e, turnover_rate, bargain_date, day_date, create_time from sw_trade_info
+    </sql>
+
+    <select id="selectSwTradeInfoList" parameterType="com.qiuge.stock.domain.SwTradeInfo" >
+        <include refid="selectSwTradeInfoVo"/>
+        <where>  
+            <if test="swIndexCode != null  and swIndexCode != ''"> and sw_index_code = #{swIndexCode}</if>
+            <if test="swIndexName != null  and swIndexName != ''"> and sw_index_name like concat('%', #{swIndexName}, '%')</if>
+            <if test="bargainAmount != null "> and bargain_amount = #{bargainAmount}</if>
+            <if test="bargainSumRate != null "> and bargain_sum_rate = #{bargainSumRate}</if>
+            <if test="closeIndex != null  and closeIndex != ''"> and close_index = #{closeIndex}</if>
+            <if test="dP != null  and dP != ''"> and d_p = #{dP}</if>
+            <if test="markup != null  and markup != ''"> and markup = #{markup}</if>
+            <if test="meanPrice != null  and meanPrice != ''"> and mean_price = #{meanPrice}</if>
+            <if test="negotiablesShareSum != null  and negotiablesShareSum != ''"> and negotiables_share_sum = #{negotiablesShareSum}</if>
+            <if test="negotiablesShareSum2 != null  and negotiablesShareSum2 != ''"> and negotiables_share_sum2 = #{negotiablesShareSum2}</if>
+            <if test="pB != null  and pB != ''"> and p_b = #{pB}</if>
+            <if test="pE != null  and pE != ''"> and p_e = #{pE}</if>
+            <if test="turnoverRate != null  and turnoverRate != ''"> and turnover_rate = #{turnoverRate}</if>
+            <if test="bargainDate != null  and bargainDate != ''"> and bargain_date = #{bargainDate}</if>
+            <if test="dayDate != null "> and day_date = #{dayDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectSwTradeInfoById" parameterType="String" >
+        <include refid="selectSwTradeInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSwTradeInfo" parameterType="com.qiuge.stock.domain.SwTradeInfo">
+        insert into sw_trade_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="swIndexCode != null and swIndexCode != ''">sw_index_code,</if>
+            <if test="swIndexName != null">sw_index_name,</if>
+            <if test="bargainAmount != null">bargain_amount,</if>
+            <if test="bargainSumRate != null">bargain_sum_rate,</if>
+            <if test="closeIndex != null">close_index,</if>
+            <if test="dP != null">d_p,</if>
+            <if test="markup != null">markup,</if>
+            <if test="meanPrice != null">mean_price,</if>
+            <if test="negotiablesShareSum != null">negotiables_share_sum,</if>
+            <if test="negotiablesShareSum2 != null">negotiables_share_sum2,</if>
+            <if test="pB != null">p_b,</if>
+            <if test="pE != null">p_e,</if>
+            <if test="turnoverRate != null">turnover_rate,</if>
+            <if test="bargainDate != null">bargain_date,</if>
+            <if test="dayDate != null">day_date,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="swIndexCode != null and swIndexCode != ''">#{swIndexCode},</if>
+            <if test="swIndexName != null">#{swIndexName},</if>
+            <if test="bargainAmount != null">#{bargainAmount},</if>
+            <if test="bargainSumRate != null">#{bargainSumRate},</if>
+            <if test="closeIndex != null">#{closeIndex},</if>
+            <if test="dP != null">#{dP},</if>
+            <if test="markup != null">#{markup},</if>
+            <if test="meanPrice != null">#{meanPrice},</if>
+            <if test="negotiablesShareSum != null">#{negotiablesShareSum},</if>
+            <if test="negotiablesShareSum2 != null">#{negotiablesShareSum2},</if>
+            <if test="pB != null">#{pB},</if>
+            <if test="pE != null">#{pE},</if>
+            <if test="turnoverRate != null">#{turnoverRate},</if>
+            <if test="bargainDate != null">#{bargainDate},</if>
+            <if test="dayDate != null">#{dayDate},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSwTradeInfo" parameterType="com.qiuge.stock.domain.SwTradeInfo">
+        update sw_trade_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="swIndexCode != null and swIndexCode != ''">sw_index_code = #{swIndexCode},</if>
+            <if test="swIndexName != null">sw_index_name = #{swIndexName},</if>
+            <if test="bargainAmount != null">bargain_amount = #{bargainAmount},</if>
+            <if test="bargainSumRate != null">bargain_sum_rate = #{bargainSumRate},</if>
+            <if test="closeIndex != null">close_index = #{closeIndex},</if>
+            <if test="dP != null">d_p = #{dP},</if>
+            <if test="markup != null">markup = #{markup},</if>
+            <if test="meanPrice != null">mean_price = #{meanPrice},</if>
+            <if test="negotiablesShareSum != null">negotiables_share_sum = #{negotiablesShareSum},</if>
+            <if test="negotiablesShareSum2 != null">negotiables_share_sum2 = #{negotiablesShareSum2},</if>
+            <if test="pB != null">p_b = #{pB},</if>
+            <if test="pE != null">p_e = #{pE},</if>
+            <if test="turnoverRate != null">turnover_rate = #{turnoverRate},</if>
+            <if test="bargainDate != null">bargain_date = #{bargainDate},</if>
+            <if test="dayDate != null">day_date = #{dayDate},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSwTradeInfoById" parameterType="String">
+        delete from sw_trade_info where id = #{id}
+    </delete>
+
+    <delete id="deleteSwTradeInfoByIds" parameterType="String">
+        delete from sw_trade_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

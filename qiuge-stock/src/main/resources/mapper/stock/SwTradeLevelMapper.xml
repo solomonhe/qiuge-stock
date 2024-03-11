@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qiuge.stock.mapper.SwTradeLevelMapper">
+    
+
+
+    <sql id="selectSwTradeLevelVo">
+        select id, parent_code, parent_name, sw_level, sw_name, sw_code, create_time from sw_trade_level
+    </sql>
+
+    <select id="selectSwTradeLevelList" parameterType="com.qiuge.stock.domain.SwTradeLevel" >
+        <include refid="selectSwTradeLevelVo"/>
+        <where>  
+            <if test="parentCode != null  and parentCode != ''"> and parent_code = #{parentCode}</if>
+            <if test="parentName != null  and parentName != ''"> and parent_name like concat('%', #{parentName}, '%')</if>
+            <if test="swLevel != null "> and sw_level = #{swLevel}</if>
+            <if test="swName != null  and swName != ''"> and sw_name like concat('%', #{swName}, '%')</if>
+            <if test="swCode != null  and swCode != ''"> and sw_code = #{swCode}</if>
+        </where>
+    </select>
+    
+    <select id="selectSwTradeLevelById" parameterType="String" >
+        <include refid="selectSwTradeLevelVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSwTradeLevel" parameterType="com.qiuge.stock.domain.SwTradeLevel">
+        insert into sw_trade_level
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="parentCode != null">parent_code,</if>
+            <if test="parentName != null">parent_name,</if>
+            <if test="swLevel != null">sw_level,</if>
+            <if test="swName != null">sw_name,</if>
+            <if test="swCode != null">sw_code,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="parentCode != null">#{parentCode},</if>
+            <if test="parentName != null">#{parentName},</if>
+            <if test="swLevel != null">#{swLevel},</if>
+            <if test="swName != null">#{swName},</if>
+            <if test="swCode != null">#{swCode},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSwTradeLevel" parameterType="com.qiuge.stock.domain.SwTradeLevel">
+        update sw_trade_level
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="parentCode != null">parent_code = #{parentCode},</if>
+            <if test="parentName != null">parent_name = #{parentName},</if>
+            <if test="swLevel != null">sw_level = #{swLevel},</if>
+            <if test="swName != null">sw_name = #{swName},</if>
+            <if test="swCode != null">sw_code = #{swCode},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSwTradeLevelById" parameterType="String">
+        delete from sw_trade_level where id = #{id}
+    </delete>
+
+    <delete id="deleteSwTradeLevelByIds" parameterType="String">
+        delete from sw_trade_level where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

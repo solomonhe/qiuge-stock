@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qiuge.stock.mapper.StockTradeDateMapper">
+  
+    <sql id="selectStockTradeDateVo">
+        select id, stock_type, cal_date, is_open, pretrade_date from stock_trade_date
+    </sql>
+
+    <select id="selectStockTradeDateList" parameterType="com.qiuge.stock.domain.StockTradeDate" >
+        <include refid="selectStockTradeDateVo"/>
+        <where>  
+            <if test="stockType != null  and stockType != ''"> and stock_type = #{stockType}</if>
+            <if test="calDate != null "> and cal_date = #{calDate}</if>
+            <if test="isOpen != null "> and is_open = #{isOpen}</if>
+            <if test="pretradeDate != null "> and pretrade_date = #{pretradeDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectStockTradeDateById" parameterType="String" >
+        <include refid="selectStockTradeDateVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertStockTradeDate" parameterType="com.qiuge.stock.domain.StockTradeDate">
+        insert into stock_trade_date
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="stockType != null">stock_type,</if>
+            <if test="calDate != null">cal_date,</if>
+            <if test="isOpen != null">is_open,</if>
+            <if test="pretradeDate != null">pretrade_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="stockType != null">#{stockType},</if>
+            <if test="calDate != null">#{calDate},</if>
+            <if test="isOpen != null">#{isOpen},</if>
+            <if test="pretradeDate != null">#{pretradeDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStockTradeDate" parameterType="com.qiuge.stock.domain.StockTradeDate">
+        update stock_trade_date
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stockType != null">stock_type = #{stockType},</if>
+            <if test="calDate != null">cal_date = #{calDate},</if>
+            <if test="isOpen != null">is_open = #{isOpen},</if>
+            <if test="pretradeDate != null">pretrade_date = #{pretradeDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteStockTradeDateById" parameterType="String">
+        delete from stock_trade_date where id = #{id}
+    </delete>
+
+    <delete id="deleteStockTradeDateByIds" parameterType="String">
+        delete from stock_trade_date where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

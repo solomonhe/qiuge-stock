@@ -2,34 +2,15 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.stock.mapper.StockMapper">
+<mapper namespace="com.qiuge.stock.mapper.StockMapper">
     
-    <resultMap type="Stock" id="StockResult">
-        <result property="id"    column="id"    />
-        <result property="stockCode"    column="stock_code"    />
-        <result property="stockTsCode"    column="stock_ts_code"    />
-        <result property="stockName"    column="stock_name"    />
-        <result property="area"    column="area"    />
-        <result property="industry"    column="industry"    />
-        <result property="stockFullName"    column="stock_full_name"    />
-        <result property="enName"    column="en_name"    />
-        <result property="cnspell"    column="cnspell"    />
-        <result property="market"    column="market"    />
-        <result property="exchange"    column="exchange"    />
-        <result property="currType"    column="curr_type"    />
-        <result property="opiStatus"    column="opi_status"    />
-        <result property="listDate"    column="list_date"    />
-        <result property="delistDate"    column="delist_date"    />
-        <result property="isHs"    column="is_hs"    />
-        <result property="updateTime"    column="update_time"    />
-        <result property="createTime"    column="create_time"    />
-    </resultMap>
+   
 
     <sql id="selectStockVo">
         select id, stock_code, stock_ts_code, stock_name, area, industry, stock_full_name, en_name, cnspell, market, exchange, curr_type, opi_status, list_date, delist_date, is_hs, update_time, create_time from stock
     </sql>
 
-    <select id="selectStockList" parameterType="Stock" resultMap="StockResult">
+    <select id="selectStockList" parameterType="com.qiuge.stock.domain.Stock" >
         <include refid="selectStockVo"/>
         <where>  
             <if test="stockCode != null  and stockCode != ''"> and stock_code = #{stockCode}</if>
@@ -50,12 +31,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
-    <select id="selectStockById" parameterType="String" resultMap="StockResult">
+    <select id="selectStockById" parameterType="String" >
         <include refid="selectStockVo"/>
         where id = #{id}
     </select>
         
-    <insert id="insertStock" parameterType="Stock">
+    <insert id="insertStock" parameterType="com.qiuge.stock.domain.Stock">
         insert into stock
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
@@ -99,7 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 
-    <update id="updateStock" parameterType="Stock">
+    <update id="updateStock" parameterType="com.qiuge.stock.domain.Stock">
         update stock
         <trim prefix="SET" suffixOverrides=",">
             <if test="stockCode != null">stock_code = #{stockCode},</if>

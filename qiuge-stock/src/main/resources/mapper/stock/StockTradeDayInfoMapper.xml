@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qiuge.stock.mapper.StockTradeDayInfoMapper">
+
+   
+
+    <sql id="selectStockTradeDayInfoVo">
+        select id,
+               stock_code,
+               stock_ts_code,
+               stock_name,
+               trade_date,
+               price_open,
+               price_close,
+               price_average,
+               price_high,
+               price_low,
+               pre_close,
+               price_change,
+               pct_chg,
+               stock_vol,
+               stock_amount,
+               update_time,
+               create_time
+        from stock_trade_day_info
+    </sql>
+
+    <select id="selectStockTradeDayInfoList" parameterType="com.qiuge.stock.domain.StockTradeDayInfo" >
+        <include refid="selectStockTradeDayInfoVo"/>
+        <where>
+            <if test="stockCode != null  and stockCode != ''">and stock_code = #{stockCode}</if>
+            <if test="stockTsCode != null  and stockTsCode != ''">and stock_ts_code = #{stockTsCode}</if>
+            <if test="stockName != null  and stockName != ''">and stock_name like concat('%', #{stockName}, '%')</if>
+            <if test="tradeDate != null ">and trade_date = #{tradeDate}</if>
+            <if test="priceOpen != null ">and price_open = #{priceOpen}</if>
+            <if test="priceClose != null ">and price_close = #{priceClose}</if>
+            <if test="priceAverage != null ">and price_average = #{priceAverage}</if>
+            <if test="priceHigh != null ">and price_high = #{priceHigh}</if>
+            <if test="priceLow != null ">and price_low = #{priceLow}</if>
+            <if test="preClose != null ">and pre_close = #{preClose}</if>
+            <if test="priceChange != null ">and price_change = #{priceChange}</if>
+            <if test="pctChg != null ">and pct_chg = #{pctChg}</if>
+            <if test="stockVol != null ">and stock_vol = #{stockVol}</if>
+            <if test="stockAmount != null ">and stock_amount = #{stockAmount}</if>
+        </where>
+    </select>
+
+    <select id="selectStockTradeDayInfoById" parameterType="String" >
+        <include refid="selectStockTradeDayInfoVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertStockTradeDayInfo" parameterType="com.qiuge.stock.domain.StockTradeDayInfo">
+        insert into stock_trade_day_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="stockCode != null">stock_code,</if>
+            <if test="stockTsCode != null">stock_ts_code,</if>
+            <if test="stockName != null">stock_name,</if>
+            <if test="tradeDate != null">trade_date,</if>
+            <if test="priceOpen != null">price_open,</if>
+            <if test="priceClose != null">price_close,</if>
+            <if test="priceAverage != null">price_average,</if>
+            <if test="priceHigh != null">price_high,</if>
+            <if test="priceLow != null">price_low,</if>
+            <if test="preClose != null">pre_close,</if>
+            <if test="priceChange != null">price_change,</if>
+            <if test="pctChg != null">pct_chg,</if>
+            <if test="stockVol != null">stock_vol,</if>
+            <if test="stockAmount != null">stock_amount,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="stockCode != null">#{stockCode},</if>
+            <if test="stockTsCode != null">#{stockTsCode},</if>
+            <if test="stockName != null">#{stockName},</if>
+            <if test="tradeDate != null">#{tradeDate},</if>
+            <if test="priceOpen != null">#{priceOpen},</if>
+            <if test="priceClose != null">#{priceClose},</if>
+            <if test="priceAverage != null">#{priceAverage},</if>
+            <if test="priceHigh != null">#{priceHigh},</if>
+            <if test="priceLow != null">#{priceLow},</if>
+            <if test="preClose != null">#{preClose},</if>
+            <if test="priceChange != null">#{priceChange},</if>
+            <if test="pctChg != null">#{pctChg},</if>
+            <if test="stockVol != null">#{stockVol},</if>
+            <if test="stockAmount != null">#{stockAmount},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateStockTradeDayInfo" parameterType="com.qiuge.stock.domain.StockTradeDayInfo">
+        update stock_trade_day_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stockCode != null">stock_code = #{stockCode},</if>
+            <if test="stockTsCode != null">stock_ts_code = #{stockTsCode},</if>
+            <if test="stockName != null">stock_name = #{stockName},</if>
+            <if test="tradeDate != null">trade_date = #{tradeDate},</if>
+            <if test="priceOpen != null">price_open = #{priceOpen},</if>
+            <if test="priceClose != null">price_close = #{priceClose},</if>
+            <if test="priceAverage != null">price_average = #{priceAverage},</if>
+            <if test="priceHigh != null">price_high = #{priceHigh},</if>
+            <if test="priceLow != null">price_low = #{priceLow},</if>
+            <if test="preClose != null">pre_close = #{preClose},</if>
+            <if test="priceChange != null">price_change = #{priceChange},</if>
+            <if test="pctChg != null">pct_chg = #{pctChg},</if>
+            <if test="stockVol != null">stock_vol = #{stockVol},</if>
+            <if test="stockAmount != null">stock_amount = #{stockAmount},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteStockTradeDayInfoById" parameterType="String">
+        delete
+        from stock_trade_day_info
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteStockTradeDayInfoByIds" parameterType="String">
+        delete from stock_trade_day_info where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

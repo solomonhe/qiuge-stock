@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qiuge.stock.mapper.SwTradeMapper">
+    
+  
+
+    <sql id="selectSwTradeVo">
+        select id, sw_level, sw_name, sw_code, create_time from sw_trade
+    </sql>
+
+    <select id="selectSwTradeList" parameterType="com.qiuge.stock.domain.SwTrade" >
+        <include refid="selectSwTradeVo"/>
+        <where>  
+            <if test="swLevel != null "> and sw_level = #{swLevel}</if>
+            <if test="swName != null  and swName != ''"> and sw_name like concat('%', #{swName}, '%')</if>
+            <if test="swCode != null  and swCode != ''"> and sw_code = #{swCode}</if>
+        </where>
+    </select>
+    
+    <select id="selectSwTradeById" parameterType="String" >
+        <include refid="selectSwTradeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSwTrade" parameterType="com.qiuge.stock.domain.SwTrade">
+        insert into sw_trade
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="swLevel != null">sw_level,</if>
+            <if test="swName != null">sw_name,</if>
+            <if test="swCode != null">sw_code,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="swLevel != null">#{swLevel},</if>
+            <if test="swName != null">#{swName},</if>
+            <if test="swCode != null">#{swCode},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSwTrade" parameterType="com.qiuge.stock.domain.SwTrade">
+        update sw_trade
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="swLevel != null">sw_level = #{swLevel},</if>
+            <if test="swName != null">sw_name = #{swName},</if>
+            <if test="swCode != null">sw_code = #{swCode},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSwTradeById" parameterType="String">
+        delete from sw_trade where id = #{id}
+    </delete>
+
+    <delete id="deleteSwTradeByIds" parameterType="String">
+        delete from sw_trade where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

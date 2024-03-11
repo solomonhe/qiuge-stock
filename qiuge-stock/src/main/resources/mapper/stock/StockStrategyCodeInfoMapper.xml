@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qiuge.stock.mapper.StockStrategyCodeInfoMapper">
+    
+ 
+
+    <sql id="selectStockStrategyCodeInfoVo">
+        select id, type, name, code, market, industry, select_date, select_status, code_price, day_price, day_twenty_price, day_five_price, day_ten_price, create_time from stock_strategy_code_info
+    </sql>
+
+    <select id="selectStockStrategyCodeInfoList" parameterType="com.qiuge.stock.domain.StockStrategyCodeInfo" >
+        <include refid="selectStockStrategyCodeInfoVo"/>
+        <where>  
+            <if test="type != null "> and type = #{type}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="market != null  and market != ''"> and market = #{market}</if>
+            <if test="industry != null  and industry != ''"> and industry = #{industry}</if>
+            <if test="selectDate != null "> and select_date = #{selectDate}</if>
+            <if test="selectStatus != null "> and select_status = #{selectStatus}</if>
+            <if test="codePrice != null  and codePrice != ''"> and code_price = #{codePrice}</if>
+            <if test="dayPrice != null "> and day_price = #{dayPrice}</if>
+            <if test="dayTwentyPrice != null "> and day_twenty_price = #{dayTwentyPrice}</if>
+            <if test="dayFivePrice != null "> and day_five_price = #{dayFivePrice}</if>
+            <if test="dayTenPrice != null "> and day_ten_price = #{dayTenPrice}</if>
+        </where>
+    </select>
+    
+    <select id="selectStockStrategyCodeInfoById" parameterType="String" >
+        <include refid="selectStockStrategyCodeInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertStockStrategyCodeInfo" parameterType="com.qiuge.stock.domain.StockStrategyCodeInfo">
+        insert into stock_strategy_code_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="type != null">type,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="code != null and code != ''">code,</if>
+            <if test="market != null and market != ''">market,</if>
+            <if test="industry != null and industry != ''">industry,</if>
+            <if test="selectDate != null">select_date,</if>
+            <if test="selectStatus != null">select_status,</if>
+            <if test="codePrice != null and codePrice != ''">code_price,</if>
+            <if test="dayPrice != null">day_price,</if>
+            <if test="dayTwentyPrice != null">day_twenty_price,</if>
+            <if test="dayFivePrice != null">day_five_price,</if>
+            <if test="dayTenPrice != null">day_ten_price,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="type != null">#{type},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="code != null and code != ''">#{code},</if>
+            <if test="market != null and market != ''">#{market},</if>
+            <if test="industry != null and industry != ''">#{industry},</if>
+            <if test="selectDate != null">#{selectDate},</if>
+            <if test="selectStatus != null">#{selectStatus},</if>
+            <if test="codePrice != null and codePrice != ''">#{codePrice},</if>
+            <if test="dayPrice != null">#{dayPrice},</if>
+            <if test="dayTwentyPrice != null">#{dayTwentyPrice},</if>
+            <if test="dayFivePrice != null">#{dayFivePrice},</if>
+            <if test="dayTenPrice != null">#{dayTenPrice},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStockStrategyCodeInfo" parameterType="com.qiuge.stock.domain.StockStrategyCodeInfo">
+        update stock_strategy_code_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null">type = #{type},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="code != null and code != ''">code = #{code},</if>
+            <if test="market != null and market != ''">market = #{market},</if>
+            <if test="industry != null and industry != ''">industry = #{industry},</if>
+            <if test="selectDate != null">select_date = #{selectDate},</if>
+            <if test="selectStatus != null">select_status = #{selectStatus},</if>
+            <if test="codePrice != null and codePrice != ''">code_price = #{codePrice},</if>
+            <if test="dayPrice != null">day_price = #{dayPrice},</if>
+            <if test="dayTwentyPrice != null">day_twenty_price = #{dayTwentyPrice},</if>
+            <if test="dayFivePrice != null">day_five_price = #{dayFivePrice},</if>
+            <if test="dayTenPrice != null">day_ten_price = #{dayTenPrice},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteStockStrategyCodeInfoById" parameterType="String">
+        delete from stock_strategy_code_info where id = #{id}
+    </delete>
+
+    <delete id="deleteStockStrategyCodeInfoByIds" parameterType="String">
+        delete from stock_strategy_code_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
